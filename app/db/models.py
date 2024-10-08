@@ -9,7 +9,6 @@ class Position(Base):
 
     id = Column(Integer, primary_key=True)
     fen = Column(String, nullable=False)
-    eval = Column(Float)
     games = relationship("Game", secondary="game_position", back_populates="positions")
 
 

@@ -9,7 +9,7 @@ class Position(BaseModel):
 
     :param game_id: identifier of the game this position belongs to.
     :param fen: FEN notation of the position.
-    :param eval: evaluation of the position, if calculated.
+    :param eval: evaluation of the position.
     """
 
     fen: str = Field(

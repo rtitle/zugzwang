@@ -3,6 +3,7 @@ from sqlalchemy.future import select
 from app.db import models
 from app.service.base_service import BaseService
 from app.service.exceptions import NotFoundException
+from fastapi_cache.decorator import cache
 
 
 class PositionService(BaseService):
@@ -37,3 +38,20 @@ class PositionService(BaseService):
             )
             result = await session.execute(position_query)
             return result.scalars()
+    
+    @cache(expire=60)
+    async def evaluate_position(self, fen: str) -> float:
+        """
+        Evaluates a chess position.
+        Caches results since evaluation can be expensive.
+        Note: it might make more sense to store the evaluations in the database,
+        since they do not change. But I wanted to practice using a caching library.
+
+        :param fen: the FEN representation of the position.
+        
+        :return the evaluation as a float.
+        """
+
+        # TODO implement evaluation
+        return 1.2
+

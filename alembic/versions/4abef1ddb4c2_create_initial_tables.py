@@ -24,7 +24,6 @@ def upgrade() -> None:
         "position",
         sa.Column("id", sa.Integer, primary_key=True),
         sa.Column("fen", sa.String(63), nullable=False),
-        sa.Column("eval", sa.Float),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("fen"),
     )
