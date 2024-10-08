@@ -15,15 +15,15 @@ wheels = [
 ]
 
 [[package]]
-name = "aiotempfile"
-version = "0.5.4"
+name = "aiosqlite"
+version = "0.20.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "aiofiles" },
+    { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/72/62/29ebb772e73cf7c2d482b2f16374c568e6f08fb4f8be7867adf7717c26cc/aiotempfile-0.5.4.tar.gz", hash = "sha256:41554271263dda17b85658226f0ca2e929235feec7c22e37bc585a34dd5fd621", size = 4942 }
+sdist = { url = "https://files.pythonhosted.org/packages/0d/3a/22ff5415bf4d296c1e92b07fd746ad42c96781f13295a074d58e77747848/aiosqlite-0.20.0.tar.gz", hash = "sha256:6d35c8c256637f4672f843c31021464090805bf925385ac39473fb16eaaca3d7", size = 21691 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e1/47/35092ba5f44b57a7edff000f70a2e3de485e907f5c6fddab0e1b0651ea3e/aiotempfile-0.5.4-py3-none-any.whl", hash = "sha256:6a4eb6a23a2cb9951281e935866ca39edbdca7477e70b9478c1f4f0b8f8c4059", size = 9339 },
+    { url = "https://files.pythonhosted.org/packages/00/c4/c93eb22025a2de6b83263dfe3d7df2e19138e345bca6f18dba7394120930/aiosqlite-0.20.0-py3-none-any.whl", hash = "sha256:36a1deaca0cac40ebe32aac9977a6e2bbc7f5189f23f4a54d5908986729e5bd6", size = 15564 },
 ]
 
 [[package]]
@@ -474,6 +474,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/0e/c6/33c706449cdd92b1b6d756b247761e27d32230fd6b2de5f44c4c3e5632b2/SQLAlchemy-2.0.35-py3-none-any.whl", hash = "sha256:2ab3f0336c0387662ce6221ad30ab3a5e6499aab01b9790879b6578fd9b8faa1", size = 1881276 },
 ]
 
+[package.optional-dependencies]
+asyncio = [
+    { name = "greenlet" },
+]
+
 [[package]]
 name = "sqlalchemy-repr"
 version = "0.1.0"
@@ -630,25 +635,25 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "aiofiles" },
-    { name = "aiotempfile" },
+    { name = "aiosqlite" },
     { name = "alembic" },
     { name = "chess" },
     { name = "fastapi", extra = ["standard"] },
     { name = "pydantic" },
     { name = "python-multipart" },
-    { name = "sqlalchemy" },
+    { name = "sqlalchemy", extra = ["asyncio"] },
     { name = "sqlalchemy-repr" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "aiofiles", specifier = ">=24.1.0" },
-    { name = "aiotempfile", specifier = ">=0.5.4" },
+    { name = "aiosqlite", specifier = ">=0.20.0" },
     { name = "alembic", specifier = ">=1.13.3" },
     { name = "chess", specifier = ">=1.11.0" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.0" },
     { name = "pydantic", specifier = ">=2.9.2" },
     { name = "python-multipart", specifier = ">=0.0.12" },
-    { name = "sqlalchemy", specifier = ">=2.0.35" },
+    { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.0.35" },
     { name = "sqlalchemy-repr", specifier = ">=0.1.0" },
 ]

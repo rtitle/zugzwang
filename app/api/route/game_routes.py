@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/{game_id}", response_model=Game)
-def get_game(
+async def get_game(
     game_id: int, game_service: GameService = Depends(dependencies.get_game_service)
 ) -> Any:
     """
@@ -22,7 +22,7 @@ def get_game(
     :return a Game model.
     :raise 404 exception if the game does not exist.
     """
-    return game_service.get_game(game_id)
+    return await game_service.get_game(game_id)
 
 
 @router.put("/pgn", status_code=204)

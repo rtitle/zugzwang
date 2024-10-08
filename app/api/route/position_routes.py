@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/{game_id}", response_model=list[Position])
-def enumerate_positions(
+async def enumerate_positions(
     game_id: int,
     skip: int = 0,
     limit: int = 100,
@@ -27,4 +27,6 @@ def enumerate_positions(
     :return List of positions.
     :raise 404 error if the provided game was not found.
     """
-    return position_service.enumerate_positions(game_id=game_id, skip=skip, limit=limit)
+    return await position_service.enumerate_positions(
+        game_id=game_id, skip=skip, limit=limit
+    )

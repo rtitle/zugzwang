@@ -1,10 +1,12 @@
+from sqlalchemy.future import select
+
 from app.db import models
 from app.service.base_service import BaseService
 from app.service.exceptions import NotFoundException
 
 
 class PositionService(BaseService):
-    def enumerate_positions(
+    async def enumerate_positions(
         self, game_id: int, skip: int, limit: int
     ) -> list[models.Position]:
         """
@@ -17,19 +19,21 @@ class PositionService(BaseService):
         :return list of Position objects.
         :raise NotFoundException if the game does not exist.
         """
-        with self.db_session_maker() as session:
+        async with self.db_session_maker() as session:
             # raise 404 if the game does not exist
-            game_exists = (
-                session.query(models.Game.id).where(models.Game.id == game_id).first()
-            )
+            exists_query = select(models.Game.id).where(models.Game.id == game_id)
+            result = await session.execute(exists_query)
+            game_exists = result.scalar()
             if not game_exists:
                 raise NotFoundException("Game not found")
 
-            return (
-                session.query(models.Position)
+            position_query = (
+                select(models.Position)
                 .join(models.GamePosition)
                 .join(models.Game)
                 .filter(models.Game.id == game_id)
                 .offset(skip)
                 .limit(limit)
             )
+            result = await session.execute(position_query)
+            return result.scalars()
