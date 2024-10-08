@@ -1,31 +1,30 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 
-from app.api import dependencies, schemas
-from app.api.service import position_service
+from app.api import dependencies
+from app.api.schema.position_schemas import Position
+from app.service.position_service import PositionService
 
 router = APIRouter()
 
 
-@router.get("/{game_id}", response_model=list[schemas.Position])
+@router.get("/{game_id}", response_model=list[Position])
 def enumerate_positions(
     game_id: int,
     skip: int = 0,
     limit: int = 100,
-    db: Session = Depends(dependencies.get_db),
+    position_service: PositionService = Depends(dependencies.get_position_service),
 ) -> Any:
     """
     Enumerates chess positions with the provided filters.
 
+    :param game_id: the Game id.
     :param skip: number of records to offset.
     :param limit: limit results to the provided value.
-    :param game_ids: limit results to the provided game IDs.
+    :param position_service: injected PositionService dependency.
 
     :return List of positions.
+    :raise 404 error if the provided game was not found.
     """
-    db_positions = position_service.enumerate_positions(
-        db, game_id=game_id, skip=skip, limit=limit
-    )
-    return db_positions
+    return position_service.enumerate_positions(game_id=game_id, skip=skip, limit=limit)

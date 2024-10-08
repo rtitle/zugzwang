@@ -1,7 +1,7 @@
 from typing import Any
 
 from fastapi import APIRouter
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import RedirectResponse
 
 router = APIRouter()
 

@@ -1,31 +1,32 @@
 import aiofiles
 import chess.pgn
-from sqlalchemy.orm import Session
 
-from app.api.service import position_service
 from app.db import models
+from app.service.base_service import BaseService
+from app.service.exceptions import NotFoundException
 
 
-class GameService:
-    # TODO error handling if game not found
-    def get_game(self, db: Session, game_id: int) -> models.Game:
+class GameService(BaseService):
+    def get_game(self, game_id: int) -> models.Game:
         """
         Gets a game by ID.
 
-        :param db: database session.
         :param game_id: the game ID to look up.
 
         :return Game DB model object.
+        :raise NotFoundException if the game does not exist.
         """
-        return db.query(models.Game).where(models.Game.id == game_id).first()
+        with self.db_session_maker() as session:
+            game = session.query(models.Game).where(models.Game.id == game_id).first()
+            if not game:
+                raise NotFoundException("Game not found")
+            return game
 
-    # TODO error handling
     # TODO async?
-    async def import_pgn(self, db: Session, filename: str, content: bytes) -> None:
+    async def import_pgn(self, filename: str, content: bytes) -> None:
         """
         Imports a PGN file to the database.
 
-        :param db: database session.
         :param filename: name of the uploaded PGN file.
         :param content: content in bytes of the PGN file.
         """
@@ -55,5 +56,6 @@ class GameService:
         db_game.positions.extend(db_positions)
 
         # Persist to the database.
-        db.add(db_game)
-        db.commit()
+        with self.db_session_maker() as session:
+            session.add(db_game)
+            session.commit()
