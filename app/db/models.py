@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Float, ForeignKey, Integer, String
+from sqlalchemy import Column, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 
-from app.core.db import Base
+from app.db.base import Base
 
 
 class Position(Base):
@@ -10,7 +10,7 @@ class Position(Base):
     id = Column(Integer, primary_key=True)
     fen = Column(String, nullable=False)
     eval = Column(Float)
-    games = relationship("Game", secondary="game_position", backref="position")
+    games = relationship("Game", secondary="game_position", back_populates="positions")
 
 
 class Game(Base):
@@ -19,7 +19,9 @@ class Game(Base):
     id = Column(Integer, primary_key=True)
     description = Column(String, nullable=False)
     opening = Column(String)
-    positions = relationship("Position", secondary="game_position", backref="game")
+    positions = relationship(
+        "Position", secondary="game_position", back_populates="games"
+    )
 
 
 class GamePosition(Base):
@@ -27,6 +29,3 @@ class GamePosition(Base):
 
     game_id = Column(Integer, ForeignKey("game.id"), primary_key=True)
     position_id = Column(Integer, ForeignKey("position.id"), primary_key=True)
-    move_number = Column(Integer, nullable=False)
-    move_color = Column(String, nullable=False)
-    move = Column(String, nullable=False)

@@ -41,9 +41,6 @@ def upgrade() -> None:
         "game_position",
         sa.Column("game_id", sa.Integer, nullable=False),
         sa.Column("position_id", sa.Integer, nullable=False),
-        sa.Column("move_number", sa.Integer, nullable=False),
-        sa.Column("move_color", sa.String(2), nullable=False),
-        sa.Column("move", sa.String(10), nullable=False),
         sa.ForeignKeyConstraint(
             ["game_id"],
             ["game.id"],

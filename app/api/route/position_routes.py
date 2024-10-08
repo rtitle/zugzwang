@@ -1,20 +1,20 @@
 from typing import Any
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_db
-from app.core import crud, schemas
+from app.api import dependencies, schemas
+from app.api.service import position_service
 
 router = APIRouter()
 
 
-@router.get("/", response_model=list[schemas.Position])
+@router.get("/{game_id}", response_model=list[schemas.Position])
 def enumerate_positions(
+    game_id: int,
     skip: int = 0,
     limit: int = 100,
-    game_ids: list[int] = Query(None),
-    db: Session = Depends(get_db),
+    db: Session = Depends(dependencies.get_db),
 ) -> Any:
     """
     Enumerates chess positions with the provided filters.
@@ -25,7 +25,7 @@ def enumerate_positions(
 
     :return List of positions.
     """
-    db_positions = crud.enumerate_positions(
-        db, skip=skip, limit=limit, game_ids=game_ids
+    db_positions = position_service.enumerate_positions(
+        db, game_id=game_id, skip=skip, limit=limit
     )
     return db_positions

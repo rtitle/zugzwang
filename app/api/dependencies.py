@@ -2,8 +2,7 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
-from app.core import models
-from app.core.db import SessionLocal, engine
+from app.db.base import SessionLocal
 
 
 def get_db() -> Session:
