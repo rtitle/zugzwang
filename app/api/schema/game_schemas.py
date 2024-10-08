@@ -13,7 +13,7 @@ class Game(BaseModel):
     """
 
     id: int = Field(example=1)
-    description: str = Field(example="Rated event")
+    description: str = Field(examples=["Rated event"])
     opening: Optional[str] = Field(
-        example="French Defense: Advance Variation, Nimzowitsch System", default=None
+        examples=["French Defense: Advance Variation, Nimzowitsch System"], default=None
     )

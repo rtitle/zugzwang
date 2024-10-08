@@ -13,6 +13,6 @@ class Position(BaseModel):
     """
 
     fen: str = Field(
-        example="rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"
+        examples=["rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"]
     )
-    eval: Optional[float] = Field(example="0.5", default=None)
+    eval: Optional[float] = Field(examples=["0.5"], default=None)

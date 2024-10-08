@@ -19,7 +19,7 @@ class PositionService(BaseService):
         :return list of Position objects.
         :raise NotFoundException if the game does not exist.
         """
-        async with self.db_session_maker() as session:
+        async with self.sessionmaker() as session:
             # raise 404 if the game does not exist
             exists_query = select(models.Game.id).where(models.Game.id == game_id)
             result = await session.execute(exists_query)

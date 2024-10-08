@@ -15,5 +15,5 @@ class BaseAPIError(BaseModel):
 
 
 class NotFoundError(BaseAPIError):
-    status: int = Field(example=status.HTTP_404_NOT_FOUND)
-    message: str = Field(example="Game not found")
+    status: int = Field(examples=[status.HTTP_404_NOT_FOUND])
+    message: str = Field(examples=["Game not found"])

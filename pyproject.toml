@@ -15,3 +15,10 @@ dependencies = [
     "sqlalchemy-repr>=0.1.0",
     "sqlalchemy[asyncio]>=2.0.35",
 ]
+
+[tool.uv]
+dev-dependencies = [
+    "coverage>=7.6.1",
+    "pytest>=8.3.3",
+    "ruff>=0.6.9",
+]

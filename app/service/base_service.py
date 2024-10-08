@@ -1,4 +1,6 @@
-from app.db import db_session_maker
+from sqlalchemy.ext.asyncio import async_sessionmaker
+
+from app.db import global_sessionmaker
 
 
 class BaseService:
@@ -6,5 +8,5 @@ class BaseService:
     Base service class containing common infrastructure for services.
     """
 
-    def __init__(self):
-        self.db_session_maker = db_session_maker
+    def __init__(self, sessionmaker: async_sessionmaker = global_sessionmaker) -> None:
+        self.sessionmaker = sessionmaker

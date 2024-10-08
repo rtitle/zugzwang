@@ -17,7 +17,7 @@ class GameService(BaseService):
         :return Game DB model object.
         :raise NotFoundException if the game does not exist.
         """
-        async with self.db_session_maker() as session:
+        async with self.sessionmaker() as session:
             query = select(models.Game).where(models.Game.id == game_id)
             result = await session.execute(query)
             game = result.scalar()
@@ -58,6 +58,6 @@ class GameService(BaseService):
         db_game.positions.extend(db_positions)
 
         # Persist to the database.
-        async with self.db_session_maker() as session:
+        async with self.sessionmaker() as session:
             session.add(db_game)
             session.commit()
