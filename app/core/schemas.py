@@ -3,17 +3,22 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class GameBase(BaseModel):
-    white: str
-    black: str
-    white_elo: int
-    black_elo: int
-    opening: Optional[str]
+# todo add some examples
+class Position(BaseModel):
+    """
+    A chess position.
 
+    :param game_id: identifier of the game this position belongs to.
+    :param fen: FEN notation of the position.
+    :param eval: evaluation of the position, if calculated.
+    :param move_number: the move number in the game.
+    :param move_color: the move color in the game.
+    :param move: the move in PGN format.
+    """
 
-class Game(GameBase):
-    pass
-
-
-class GameCreate(GameBase):
-    pass
+    game_id: int
+    fen: str
+    eval: Optional[float]
+    move_number: int
+    move_color: str
+    move: str

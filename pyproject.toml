@@ -8,5 +8,6 @@ dependencies = [
     "alembic>=1.13.3",
     "fastapi[standard]>=0.115.0",
     "pydantic>=2.9.2",
+    "sqlalchemy-repr>=0.1.0",
     "sqlalchemy>=2.0.35",
 ]
